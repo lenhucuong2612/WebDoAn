@@ -29,6 +29,7 @@ class ColorController extends Controller
         $color->name=trim($request->color_name);
         $color->code=trim($request->code_name);
         $color->created_by=Auth::user()->id;
+        $color->status=$request->status;
         $color->save();
         session()->flash("success","Color successfully created");
         return redirect(route("admin.color.list"));
@@ -53,6 +54,7 @@ class ColorController extends Controller
         $color->name=trim($request->color_name);
         $color->code=trim($request->code_name);
         $color->created_by=Auth::user()->id;
+        $color->status=$request->status;
         $color->save();
         session()->flash("success","Color successfully updated");
         return redirect(route("admin.color.list"));

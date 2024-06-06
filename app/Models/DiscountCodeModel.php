@@ -17,7 +17,6 @@ class DiscountCodeModel extends Model
     {
         return self::select('discount_code.*')
         ->where('discount_code.is_delete','=',0)
-        ->where('discount_code.status','=',0)
         ->orderBy('discount_code.id','desc')
         ->paginate(20);
     }

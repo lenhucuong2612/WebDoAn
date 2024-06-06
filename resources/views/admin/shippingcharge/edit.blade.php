@@ -37,8 +37,8 @@
                       <div class="form-group">
                         <label for="">Status</label>
                         <select name="status" class="form-control">
-                          <option {{(old('status')==0)?'selected':''}} value="0">Active</option>
-                          <option {{(old('status')==1)?'selected':''}} value="1">Inactive</option>
+                          <option {{(old('status',$getRecord->status)==0)?'selected':''}} value="0">Active</option>
+                          <option {{(old('status',$getRecord->status)==1)?'selected':''}}  value="1">Inactive</option>
                         </select>
                       </div>
                     </div>

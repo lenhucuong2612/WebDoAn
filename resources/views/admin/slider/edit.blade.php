@@ -8,7 +8,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1>Add New Slider</h1>
+                <h1>Edit Slider</h1>
               </div>
             </div>
           </div><!-- /.container-fluid -->

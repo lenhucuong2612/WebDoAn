@@ -10,7 +10,7 @@ class SliderController extends Controller
 {
     public function List(){
         $data['header_title']="List Shipping Charge";
-        $data['getRecord']=SliderModel::getRecordActive();
+        $data['getRecord']=SliderModel::getRecord();
         return view("admin.slider.list",$data);
     }
     public function Add(){

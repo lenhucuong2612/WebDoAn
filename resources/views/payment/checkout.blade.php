@@ -30,12 +30,12 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>First Name *</label>
-                                        <input type="text"  value="{{!empty(Auth::user()->name)?explode(' ',Auth::user()->name)[0]:''}}"  name="first_name" class="form-control" required>
+                                        <input type="text"  value="{{(!empty(Auth::user()->name) && !empty(explode(' ',Auth::user()->name)[0]))?explode(' ',Auth::user()->name)[0]:''}}"  name="first_name" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>Last Name *</label>
-                                        <input type="text" value="{{!empty(Auth::user()->name)?explode(' ',Auth::user()->name)[1]:''}}" name="last_name" class="form-control" required>
+                                        <input type="text" value="{{(!empty(Auth::user()->name) && !empty(explode(' ',Auth::user()->name)[1]))?explode(' ',Auth::user()->name)[1]:''}}" name="last_name" class="form-control" required>
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 

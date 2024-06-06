@@ -237,8 +237,8 @@ class PaymentController extends Controller
                     $query['currency_code']='USD';
                     $query['cancel_return']=url('checkout');
                     $query['return']=url('paypal/success-payment');
-
                     $query_string=http_build_query($query);
+                    dd($query_string);
                     header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?'. $query_string);
                     exit();
                 }else if($getOrder->payment_method=='stripe'){

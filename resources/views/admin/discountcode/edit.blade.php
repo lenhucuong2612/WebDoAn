@@ -32,8 +32,8 @@
                       <div class="form-group">
                         <label for="">Type</label>
                         <select name="type" class="form-control">
-                          <option {{(old('status')==0)?'selected':''}} value="Amount">Amount</option>
-                          <option {{(old('status')==1)?'selected':''}} value="Percent">Percent</option>
+                          <option {{(old('type',$getRecord->type)=='Amount')?'selected':''}} value="Amount">Amount</option>
+                          <option {{(old('type',$getRecord->type)=='Percent')?'selected':''}} value="Percent">Percent</option>
                         </select>
                       </div>
                       <div class="form-group">
@@ -49,8 +49,8 @@
                       <div class="form-group">
                         <label for="">Status</label>
                         <select name="status" class="form-control">
-                          <option {{(old('status')==0)?'selected':''}} value="0">Active</option>
-                          <option {{(old('status')==1)?'selected':''}} value="1">Inactive</option>
+                          <option {{(old('status',$getRecord->status)==0)?'selected':''}} value="0">Active</option>
+                          <option {{(old('status',$getRecord->status)==1)?'selected':''}}  value="1">Inactive</option>
                         </select>
                       </div>
                     </div>

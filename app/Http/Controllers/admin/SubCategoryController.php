@@ -36,6 +36,7 @@ class SubCategoryController extends Controller
         $category->meta_keywords=trim($request->meta_keywords);
         $category->created_by=Auth::user()->id;
         $category->category_id=$request->category_name;
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Sub Category successfully created");
         return redirect(route("admin.sub_categories.list"));
@@ -66,6 +67,7 @@ class SubCategoryController extends Controller
         $category->meta_keywords=trim($request->meta_keywords);
         $category->created_by=Auth::user()->id;
         $category->category_id=$request->category_name;
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Sub Category successfully updated");
         return redirect(route("admin.sub_categories.list"));

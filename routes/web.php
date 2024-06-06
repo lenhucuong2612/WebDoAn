@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\BlogCategoryController;
+use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ColorController;
@@ -151,9 +153,26 @@ Route::group(['middleware'=>'admin'],function(){
      Route::get("/admin/partner/edit/{id}",[PartnerController::class,'Edit'])->name("admin.partner.edit");
      Route::post("/admin/partner/edit/{id}",[PartnerController::class,'Update'])->name("admin.partner.update");
      Route::get("/admin/partner/remove/{id}",[PartnerController::class,'Remove'])->name("admin.partner.remove");
+
+     Route::get("/admin/blogcategory/list",[BlogCategoryController::class,'List'])->name("admin.blogcategory.list");
+     Route::get("/admin/blogcategory/add",[BlogCategoryController::class,'Add'])->name("admin.blogcategory.add");
+     Route::post("/admin/blogcategory/add",[BlogCategoryController::class,'Insert'])->name("admin.blogcategory.insert");
+     Route::get("/admin/blogcategory/edit/{id}",[BlogCategoryController::class,'Edit'])->name("admin.blogcategory.edit");
+     Route::post("/admin/blogcategory/edit/{id}",[BlogCategoryController::class,'Update'])->name("admin.blogcategory.update");
+     Route::get("/admin/blogcategory/remove/{id}",[BlogCategoryController::class,'Remove'])->name("admin.blogcategory.remove");
+
+     Route::get("/admin/blog/list",[BlogController::class,'List'])->name("admin.blog.list");
+     Route::get("/admin/blog/add",[BlogController::class,'Add'])->name("admin.blog.add");
+     Route::post("/admin/blog/add",[BlogController::class,'Insert'])->name("admin.blog.insert");
+     Route::get("/admin/blog/edit/{id}",[BlogController::class,'Edit'])->name("admin.blog.edit");
+     Route::post("/admin/blog/edit/{id}",[BlogController::class,'Update'])->name("admin.blog.update");
+     Route::get("/admin/blog/remove/{id}",[BlogController::class,'Remove'])->name("admin.blog.remove");
 });
 
 Route::get('/',[HomeController::class,'home'])->name('home');
+Route::post('/recent_arrival_category_product',[HomeController::class,'recent_arrival_category_product']);
+Route::post('/trendy_product_category',[HomeController::class,'trendyCategoryProduct']);
+
 Route::get('/contact',[HomeController::class,'Contact'])->name('contact');
 Route::post('/contact',[HomeController::class,'SubmitContact']);
 Route::get('/about',[HomeController::class,'About'])->name('about');
@@ -164,7 +183,7 @@ Route::get('/returns',[HomeController::class,'Returns'])->name('returns');
 Route::get('/shipping',[HomeController::class,'Shipping'])->name('shipping');
 Route::get('/terms-conditions',[HomeController::class,'TermConditions'])->name('terms-conditions');
 Route::get('/privacy-policy',[HomeController::class,'PrivacyPolicy'])->name('privacy-policy');
-
+Route::get('blog',[HomeController::class,'Blog'])->name('blog');
 Route::post('/auth_register',[AuthController::class,'AuthRegister'])->name("auth_register");
 Route::post('/auth_login',[AuthController::class,'AuthLogin'])->name('auth_login');
 Route::get("/active/{id}",[AuthController::class,'ActiveEmail'])->name('active_email');

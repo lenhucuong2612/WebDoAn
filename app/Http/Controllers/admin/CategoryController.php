@@ -44,6 +44,7 @@ class CategoryController extends Controller
             $file->move(public_path('/upload/category/'),$filename);
             $category->image_name=trim($filename);
         }
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Category successfully created");
         return redirect(route("admin.categories.list"));
@@ -90,6 +91,7 @@ class CategoryController extends Controller
             $category->image_name=trim($filename);
         }
         $category->created_by=Auth::user()->id;
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Category successfully updated");
         return redirect(route("admin.categories.list"));

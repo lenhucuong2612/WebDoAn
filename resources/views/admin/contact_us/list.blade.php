@@ -7,7 +7,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Page List</h1>
+              <h1>Contact Us List</h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -54,7 +54,7 @@
                                 <td>{{$value->message}}</td>
                                 <td>{{$value->created_at}}</td>
                                 <td>
-                                  <a href="{{route("admin.contact_us.delete",$value->id)}}" class="btn btn-danger">Edit</a>
+                                  <a href="{{route("admin.contact_us.delete",$value->id)}}" onclick="return confirm('Are you want to delete?')" class="btn btn-danger">Remove</a>
                                 </td>
                               </tr>
                           @endforeach

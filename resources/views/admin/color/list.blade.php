@@ -11,7 +11,7 @@
             <h1>Color List</h1>
           </div>
           <div class="col-sm-6" style="text-align: right">
-            <a href="{{route("admin.color.add")}}" class="btn btn-primary">Add new brand</a>
+            <a href="{{route("admin.color.add")}}" class="btn btn-primary">Add new color</a>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -57,14 +57,15 @@
                               <td>{{date('d-m-Y',strtotime($value->created_at))}}</td>
                               <td>
                                 <a href="{{route("admin.color.edit",$value->id)}}" class="btn btn-primary">Edit</a>
-                                <a href="{{route("admin.color.remove",$value->id)}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Remove</a>
+                                <a href="{{route("admin.color.remove",$value->id)}}" onclick="return confirm('Are you want to delete?')" class="btn btn-danger">Remove</a>
                               </td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr rowspan="9">List brand null</tr>
-                    @endif
+                   
                   </tbody>
+                  @else
+                  <tr rowspan="9">List brand null</tr>
+              @endif
                 </table>
               </div>
               <!-- /.card-body -->

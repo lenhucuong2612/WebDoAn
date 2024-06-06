@@ -8,7 +8,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1>Edit Sub Category</h1>
+                <h1>Edit Blog</h1>
               </div>
             </div>
           </div><!-- /.container-fluid -->
@@ -21,29 +21,34 @@
               <!-- left column -->
               <div class="col-md-12">
                 <div class="card card-primary">
-                  <form method="post" action="">
+                  <form method="post" action="" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                       <div class="form-group">
-                        <label >Cateogory Name</label>
-                        {{--<input type="text" class="form-control @if($errors->has('sub_category_name')) is-invalid @endif" name="sub_category_name" placeholder="Enter Sub Cateogry name" value="{{old('sub_category_name')}}">--}}
-                        <select class="form-control @if($errors->has('category_name')) is-invalid @endif" name="category_name">
+                        <label >Title</label>
+                        <input type="text" class="form-control @if($errors->has('title')) is-invalid @endif" name="title" placeholder="Enter title name" value="{{old('title',$getRecord->title)}}">
+                        <p class="invalid-feedback">{{$errors->first('title')}}</p>
+                      </div>
+                      <div class="form-group">
+                        <label >Category Name</label>
+                        <select name="blog_category_id"class="form-control">
                           <option value="">Select</option>
-                          @foreach($getCategory as $value)
-                          <option {{($value->id==$getRecord->category_id)?'selected':''}} value="{{$value->id}}">{{$value->name}}</option>
+                          @foreach ($getCategory as $category)
+                              <option {{($getRecord->blog_category_id==$category->id)?'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
                           @endforeach
                         </select>
-                        <p class="invalid-feedback">{{$errors->first('category_name')}}</p>
+                        <p class="invalid-feedback">{{$errors->first('blog_category_id')}}</p>
                       </div>
                       <div class="form-group">
-                        <label >Sub Category Name</label>
-                        <input type="text" class="form-control @if($errors->has('sub_category_name')) is-invalid @endif" name="sub_category_name" placeholder="Enter Cateogry name" value="{{old('category_name',$getRecord->name)}}">
-                        <p class="invalid-feedback">{{$errors->first('sub_category_name')}}</p>
+                        <label >Image</label>
+                        <input type="file" class="form-control" name="image_name" placeholder="Image Name">
+                        @if (!empty($getRecord->getImage()))
+                            <img src="{{$getRecord->getImage()}}" alt="" style="heigth:100px">
+                        @endif
                       </div>
                       <div class="form-group">
-                        <label >Slug</label>
-                        <input type="text" class="form-control @if($errors->has('slug')) is-invalid @endif" name="slug" placeholder="Slug EX.url" value="{{old('slug',$getRecord->slug)}}">
-                        <p class="invalid-feedback">{{$errors->first('slug')}}</p>
+                        <label >Description</label>
+                        <textarea class="form-control editor" name="description " name="description" placeholder="Description">{!! $getRecord->description !!}</textarea>
                       </div>
                       <div class="form-group">
                         <label for="">Status</label>

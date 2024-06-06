@@ -111,7 +111,21 @@ class ProductModel extends Model
 
     return $return;
 }
-
+    //home screen product
+    static public function getRecentArrival()
+    {
+        $return = ProductModel::select('product.*')
+        ->where('product.is_delete', '=', 0)
+        ->where('product.status', '=', 0);
+        if(!empty(Request::get('category_id'))){
+            $return=$return->where('product.category_id','=',Request::get('category_id'));
+        }
+        $return = $return->groupBy('product.id')
+        ->orderBy('product.id', 'desc')
+        ->limit(8)
+        ->get();
+         return $return;
+    }
     static public function getRelatedProduct($product_id,$sub_category_id){
         $return = ProductModel::select('product.*', 'users.name as created_by_name',
         'categories.name as category_name',
@@ -209,5 +223,16 @@ class ProductModel extends Model
         }else{
             return 0;
         }
+    }
+
+    //product trendy
+    static public function productTrendy()
+    {
+        return self::select('product.*', self::raw('COUNT(product.id) as count'))
+        ->join('orders_item', 'orders_item.product_id', '=', 'product.id')
+        ->groupBy('product.id')
+        ->orderByDesc('count')
+        ->limit(7)
+        ->get();
     }
 }

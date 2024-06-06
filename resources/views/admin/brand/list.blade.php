@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Admin List</h1>
+            <h1>Brand List</h1>
           </div>
           <div class="col-sm-6" style="text-align: right">
             <a href="{{route("admin.brand.add")}}" class="btn btn-primary">Add new brand</a>

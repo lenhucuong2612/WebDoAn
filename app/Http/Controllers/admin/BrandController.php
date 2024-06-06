@@ -32,6 +32,7 @@ class BrandController extends Controller
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
         $category->created_by=Auth::user()->id;
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Brand successfully created");
         return redirect(route("admin.brand.list"));
@@ -59,6 +60,7 @@ class BrandController extends Controller
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
         $category->created_by=Auth::user()->id;
+        $category->status=$request->status;
         $category->save();
         session()->flash("success","Brand successfully updated");
         return redirect(route("admin.brand.list"));

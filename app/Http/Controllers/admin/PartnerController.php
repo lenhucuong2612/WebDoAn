@@ -10,7 +10,7 @@ class PartnerController extends Controller
 {
     public function List(){
         $data['header_title']="List Partner";
-        $data['getRecord']=PartnerModel::getRecordActive();
+        $data['getRecord']=PartnerModel::getRecord();
         return view("admin.partner.list",$data);
     }
     public function Add(){

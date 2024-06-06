@@ -165,7 +165,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route("admin.sub_categories.list")}}" class="nav-link @if(Request::segment(2)=='sub_cateogy') active @endif">
+              <a href="{{route("admin.sub_categories.list")}}" class="nav-link @if(Request::segment(2)=='sub_category') active @endif">
                 <i class="nav-icon fas fa-list-alt"></i>
                 <p>
                   Sub Category
@@ -197,7 +197,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route("admin.discount_code.list")}}" class="nav-link @if(Request::segment(2)=='discount_code') active @endif">
+              <a href="{{route("admin.discount_code.list")}}" class="nav-link @if(Request::segment(2)=='discount-code') active @endif">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Discount Code
@@ -241,6 +241,22 @@
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Partner Logo
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route("admin.blogcategory.list")}}" class="nav-link @if(Request::segment(2)=='blogcategory') active @endif">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Blog Category
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route("admin.blog.list")}}" class="nav-link @if(Request::segment(2)=='blog') active @endif">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Blog
                 </p>
               </a>
             </li>

@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->string("created_by")->after("meta_keywords");
-           
+        Schema::table('blog', function (Blueprint $table) {
+            $table->integer('title_view')->default(0)->after('meta_description');
         });
     }
 
@@ -22,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn("created_by");
-           
+        Schema::table('blog', function (Blueprint $table) {
+            $table->dropColumn('title_view');
         });
     }
 };

@@ -21,6 +21,11 @@ class PageController extends Controller
         ContactUsModel::where('id','=',$id)->delete();
         return redirect()->back()->with('success','Record Successfully Deleted');
     }
+    public function Add()
+    {
+        $data['header_title']="Add Page";
+        return view('admin.page.add',$data);
+    }
     public function List(){
         $data['header_title']="List Page";
         $data['getRecord']=PageModel::getRecord();

@@ -125,6 +125,7 @@
                               <table class="table table-striped">
                                 <thead>
                                   <tr>
+                                    <th>Quantity</th>
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Action</th>
@@ -137,10 +138,13 @@
                                   @foreach ($product->getSize as $size)
                                     <tr id="DeleteSize{{$i_s}}">
                                       <td>
-                                        <input type="text" value={{$size->name}} placeholder="Name" name="size[{{$i_s}}][name]" class="form-control">
+                                        <input type="text" value="{{ $size->quantity }}" placeholder="Quantity" name="size[{{$i_s}}][quantity]" class="form-control">
                                       </td>
                                       <td>
-                                        <input type="text" value={{$size->price}} placeholder="Price" name="size[{{$i_s}}][price]" class="form-control">
+                                        <input type="text" value="{{ $size->name }}" placeholder="Name" name="size[{{$i_s}}][name]" class="form-control">
+                                      </td>
+                                      <td>
+                                        <input type="text" value="{{$size->price}}" placeholder="Price" name="size[{{$i_s}}][price]" class="form-control">
                                       </td>
                                       <td style="width:200px">
                                         <button type="button" id="{{$i_s}}" class="btn btn-danger btn-sm DeleteSize">Delete</button>
@@ -151,6 +155,9 @@
                                     @endphp
                                   @endforeach
                                   <tr>
+                                    <td>
+                                      <input type="text" placeholder="Name" name="size['+i+'][quantity]" class="form-control">
+                                    </td>
                                     <td>
                                       <input type="text" placeholder="Name" name="size['+i+'][name]" class="form-control">
                                     </td>
@@ -301,6 +308,9 @@
 
     $('body').delegate('.AddSize', 'click', function(){
     var html = '<tr id="DeleteSize'+i+'">\n\
+                    <td>\n\
+                      <input type="number" name="size['+i+'][quantity]" placeholder="Quantity" class="form-control">\n\
+                    </td>\n\
                     <td>\n\
                       <input type="text" name="size['+i+'][name]" placeholder="Name" class="form-control">\n\
                     </td>\n\

@@ -9,8 +9,8 @@
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{url($getProduct->getCategory->slug)}}">{{$getProduct->getCategory->name}}</a></li>
-                <li class="breadcrumb-item"><a href="{{url($getProduct->getCategory->slug .'/'.$getProduct->getSubCategory->slug)}}">{{$getProduct->getSubCategory->name}}</a></li>
+                <li class="breadcrumb-item"><a href="{{url($getProduct->getSubCategory->getCategory->slug)}}">{{$getProduct->getSubCategory->getCategory->name}}</a></li>
+                <li class="breadcrumb-item"><a href="{{url($getProduct->getSubCategory->getCategory->slug .'/'.$getProduct->getSubCategory->slug)}}">{{$getProduct->getSubCategory->name}}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{$getProduct->title}}</li>
             </ol>
 
@@ -87,7 +87,7 @@
                                 <div class="details-filter-row details-row-size">
                                     <label for="size">Size:</label>
                                     <div class="select-custom">
-                                        <select name="size_id" id="size" required class="form-control getSizePrice">
+                                        <select name="size_id" id="size" required class="form-control getSizePrice getCheckAmount">
                                             <option data-price="0" value="">Select a size</option>
                                             @foreach ($getProduct->getSize as $size)
                                                 <option data-price="{{!empty($size->price)?$size->price:0}}" value="{{$size->id}}">{{$size->name}} @if(!empty($size->price)) (${{number_format($size->price,2)}}) @endif</option>
@@ -103,8 +103,14 @@
                                     <div class="product-details-quantity">
                                         <input type="number" id="qty" class="form-control" required  name="qty" value="1" min="1" max="100" step="1" data-decimals="0" required>
                                     </div><!-- End .product-details-quantity -->
+                                    <p style="color:red">{{$errors->first('qty')}}</p>
                                 </div><!-- End .details-filter-row -->
-
+                                <div class="details-filter-row details-row-size">
+                                    <label for="amount">Amount:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="text" value="{{$getProduct->quantity}}" class="form-control"   name="amount" id="amountInput">
+                                    </div><!-- End .product-details-quantity -->
+                                </div><!-- End .details-filter-row -->
                                 <div class="product-details-action">
                                     <button type="submit" class="btn-product btn-cart">Add to cart</button>
 
@@ -121,8 +127,8 @@
                             <div class="product-details-footer">
                                 <div class="product-cat">
                                     <span>Category:</span>
-                                    <a href="{{url($getProduct->getCategory->slug)}}">{{$getProduct->getCategory->name}}</a>,
-                                    <a href="{{url($getProduct->getCategory->slug .'/'.$getProduct->getSubCategory->slug)}}">{{$getProduct->getSubCategory->name}}</a>
+                                    <a href="{{url($getProduct->getSubCategory->getCategory->slug)}}">{{$getProduct->getSubCategory->getCategory->name}}</a>,
+                                    <a href="{{url($getProduct->getSubCategory->getCategory->slug .'/'.$getProduct->getSubCategory->slug)}}">{{$getProduct->getSubCategory->name}}</a>
                                 </div><!-- End .product-cat -->
 
                                 <div class="social-icons social-icons-sm">
@@ -187,7 +193,7 @@
                            <div class="review">
                                 <div class="row no-gutters">
                                     <div class="col-auto">
-                                        <h4><a href="#">{{$review->name}}</a></h4>
+                                        <h4>{{$review->name}}</h4>
                                         <div class="ratings-container">
                                             <div class="ratings">
                                                 <div class="ratings-val" style="width: {{$review->getPercent()}}%;"></div><!-- End .ratings-val -->
@@ -291,6 +297,14 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+@if(session('message'))
+    <script>
+        // Lấy thông báo từ session và hiển thị alert
+        let message = {!! json_encode(session('message')) !!};
+        alert(message);
+    </script>
+@endif
+
 
 @endsection
 @section('script')
@@ -304,7 +318,35 @@
         var product_price='{{$getProduct->price}}';
         var price=$('option:selected',this).attr('data-price');
         var total=parseFloat(product_price)+parseFloat(price);
-        $('#getTotalprice').html(total.toFixed(2));
+        $('#getTotalprice').html(total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    })
+
+    $('body').delegate('.getCheckAmount','click',function(){
+        var size_id=$(this).val();
+        var name='{{$size->name}}';
+        
+        var data = []; // Khai báo và khởi tạo mảng
+        data.push({ size_id: size_id, name: name }); // Thêm phần tử vào mảng
+        console.log(data);
+        $.ajax({
+            url:"{{url('seen_quantity_product_of_size')}}",
+            type:'post',
+            data:{
+                "_token":"{{csrf_token()}}",
+                data:data,
+            },
+            dataType:'json',
+            success: function(response) {
+                if (response.success) {
+                var amount = response.amount;
+                $('#amountInput').val(amount);
+            } else {
+                // Xử lý trường hợp không thành công (response.success === false)
+                console.log('Failed to fetch amount.');
+            }
+        // Xử lý dữ liệu JSON nhận được từ server
+    },
+        })
     })
 </script>
 @endsection

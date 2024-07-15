@@ -16,14 +16,12 @@ class SliderModel extends Model
     static public function getRecord()
     {
         return self::select('slider.*')
-        ->where('slider.is_delete','=',0)
         ->orderBy('slider.id','desc')
         ->paginate(20);
     }
     static public function getRecordActive()
     {
         return self::select('slider.*')
-        ->where('slider.is_delete','=',0)
         ->where('slider.status','=',0)
         ->orderBy('slider.id','asc')
         ->paginate(20);

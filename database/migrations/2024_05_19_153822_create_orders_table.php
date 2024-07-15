@@ -38,7 +38,6 @@ return new class extends Migration
             $table->tinyInteger('is_payment')->nullable()->default(0);
             $table->text('payment_data')->default(null);
             $table->tinyInteger("status")->default(0)->comment('0=Pedding, 1=Inprogress,2=Delivered,3=Completed,4=Cancalled');
-            $table->tinyInteger('is_delete')->default(0)->comment('0:not, 1:deleted');
             $table->timestamps();
         });
     }

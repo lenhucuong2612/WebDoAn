@@ -46,7 +46,7 @@
                           @foreach ($getRecord as $value)
                               <tr  class="active">
                                 <td>{{$value->id}}</td>
-                                <td>{{!empty($value->getUser)?$value->getUser->name:'User not login'}}</td>
+                                <td>{{!empty($value->getUser)?$value->getUser->name:'Guest Account'}}</td>
                                 <td>{{$value->name}}</td>
                                 <td>{{$value->email}}</td>
                                 <td>{{$value->phone}}</td>
@@ -54,7 +54,7 @@
                                 <td>{{$value->message}}</td>
                                 <td>{{$value->created_at}}</td>
                                 <td>
-                                  <a href="{{route("admin.contact_us.delete",$value->id)}}" onclick="return confirm('Are you want to delete?')" class="btn btn-danger">Remove</a>
+                                  <a href="{{route("admin.contact_us.delete",$value->id)}}" onclick="return confirm('Are you want to delete?')"><i style="width: 30px; font-size:20px; color: red" class="far fas fa-trash nav-icon"></i></a>
                                 </td>
                               </tr>
                           @endforeach

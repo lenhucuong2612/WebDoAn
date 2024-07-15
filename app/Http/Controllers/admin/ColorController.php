@@ -28,7 +28,6 @@ class ColorController extends Controller
         $color=new ColorModel();
         $color->name=trim($request->color_name);
         $color->code=trim($request->code_name);
-        $color->created_by=Auth::user()->id;
         $color->status=$request->status;
         $color->save();
         session()->flash("success","Color successfully created");
@@ -53,7 +52,6 @@ class ColorController extends Controller
         $color=ColorModel::getSingle($id);
         $color->name=trim($request->color_name);
         $color->code=trim($request->code_name);
-        $color->created_by=Auth::user()->id;
         $color->status=$request->status;
         $color->save();
         session()->flash("success","Color successfully updated");
@@ -66,9 +64,13 @@ class ColorController extends Controller
     }
     public function Remove($id){
         $color=ColorModel::getSingle($id);
-        $color->is_delete=1;
-        $color->save();
+       if($color==null)
+       {
+        abort(404);
+       }else{
+        $color->delete();
         session()->flash("success","Color successfully deleted");
         return redirect()->back();
+       }
     }
 }

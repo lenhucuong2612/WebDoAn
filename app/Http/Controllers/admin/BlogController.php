@@ -121,9 +121,13 @@ class BlogController extends Controller
     }
     public function Remove($id){
         $color=BlogModel::getSingle($id);
-        $color->is_delete=1;
-        $color->save();
+        if($color==null){
+            abort(404);
+        }
+       else{
+        $color->delete();
         session()->flash("success","Blog category successfully deleted");
         return redirect()->back();
+       }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,9 @@ class AdminController extends Controller
         return view("admin.admin.list",$data);
     }
     public function AddAdmin(){
+        if(Auth::user()->is_admin==2){
+            return redirect(route("admin.admin.list"))->with("error","You don't have enough permissions");
+        }
         $data['header_title']="Add Admin";
         return view("admin.admin.add",$data);
     }
@@ -32,7 +36,7 @@ class AdminController extends Controller
             $user->email=$request->email;
             $user->password=Hash::make($request->passwrod);
             $user->status=$request->status;
-            $user->is_admin=1;
+            $user->is_admin=2;
             $user->save();
 
             return redirect(route("admin.admin.list"))->with("success","Added admin successfully");
@@ -44,9 +48,13 @@ class AdminController extends Controller
         
     }
     public function EditAdmin($id){
+        if(Auth::user()->is_admin==2 && Auth::user()->id!=$id){
+            return redirect(route("admin.admin.list"))->with("error","You don't have enough permissions");
+        }
+        $data['header_title']="Add Admin";
         $data['header_title']="Edit Admin";
         $data['user']=User::getSingle($id);
-        if($data['user']==null || $data['user']->is_delete=1){
+        if($data['user']==null){
             abort(404);
         }
         return view("admin.admin.edit",$data);
@@ -77,9 +85,14 @@ class AdminController extends Controller
     }
     public function RemoveAdmin($id){
         $user=User::getSingle($id);
-        $user->is_delete=1;
-        $user->save();
-        return redirect()->back()->with("success","Deleted record successfully");
+        if($user==null)
+        {
+            abort(404);
+        }
+        else{
+            $user->delete();
+            return redirect()->back()->with("success","Deleted record successfully");
+        }
     }
 
     public function ListCustomer()

@@ -6,6 +6,7 @@ use App\Models\SystemSettingModel;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use OrderModels;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,4 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
     }
-    
 }

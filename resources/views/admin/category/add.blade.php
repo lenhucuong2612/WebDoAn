@@ -30,11 +30,6 @@
                         <p class="invalid-feedback">{{$errors->first('category_name')}}</p>
                       </div>
                       <div class="form-group">
-                        <label >Slug</label>
-                        <input type="text" class="form-control @if($errors->has('slug')) is-invalid @endif" name="slug" placeholder="Slug EX.url" value="{{old('slug')}}">
-                        <p class="invalid-feedback">{{$errors->first('slug')}}</p>
-                      </div>
-                      <div class="form-group">
                         <label for="">Status</label>
                         <select name="status" class="form-control">
                           <option value="0">Active</option>

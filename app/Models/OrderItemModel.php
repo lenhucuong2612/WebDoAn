@@ -18,4 +18,9 @@ class OrderItemModel extends Model
     {
         return ProductReviewModel::getReivew($product_id,$order_id,Auth::user()->id);
     }
+    public static function findProductByOrderItem($id)
+    {
+        return self::where('order_id','=',$id)->get();
+    }
+   
 }

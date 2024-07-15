@@ -66,9 +66,13 @@ class DiscountCodeController extends Controller
     }
     public function Remove($id){
         $discount_code=DiscountCodeModel::getSingle($id);
-        $discount_code->is_delete=1;
-        $discount_code->save();
+        if($discount_code==null)
+        {
+            abort(404);
+        }else{
+            $discount_code->delete();
         session()->flash("success","Color successfully deleted");
         return redirect()->back();
+        }
     }
 }

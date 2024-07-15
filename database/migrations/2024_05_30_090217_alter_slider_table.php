@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('slider', function (Blueprint $table) {
             $table->tinyInteger('status')->default(0)->comment('0:active, 1:inactive');
-            $table->tinyInteger('is_delete')->default(0)->comment('0:not, 1:deleted');
         });
     }
 
@@ -24,7 +23,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('status');
-            $table->dropColumn('is_delete');
         });
     }
 };

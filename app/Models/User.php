@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     static public function getAdmin(){
         return User::select("users.*")
-        ->where(['is_admin'=>1,'is_delete'=>0])
+        ->whereIn('is_admin',[1,2])
         ->orderBy('id','desc')
         ->get();
     }
@@ -61,20 +61,17 @@ class User extends Authenticatable
     static public function getTotalUser(){
         return self::select('id')
         ->where('is_admin','=',0)
-        ->where('is_delete','=',0)
         ->count();
     }
     static public function getTotalTodaylUser(){
         return self::select('id')
         ->where('is_admin','=',0)
-        ->where('is_delete','=',0)
         ->where('created_at','=',date('Y-m-d'))
         ->count();
     }
     static public function getTotalCustomerMonth($start_date,$end_date){
         return self::select('id')
         ->where('is_admin','=',0)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','>=',$start_date)
         ->whereDate('created_at','<=',$end_date)
         ->count();
@@ -97,7 +94,7 @@ class User extends Authenticatable
         if(!empty(Request::get('to_date'))){
             $return =$return->where('created_at','<=',Request::get('name'));
         }
-        $return=$return->where(['is_admin'=>0,'is_delete'=>0])
+        $return=$return->where(['is_admin'=>0])
         ->orderBy('id','desc')
         ->paginate(2);
         

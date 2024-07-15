@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('status')->default(0)->comment('0:active, 1:inactive');
-            $table->tinyInteger('is_delete')->default(0)->comment('0:not, 1:deleted');
             $table->string("meta_title");
             $table->text("meta_description");
             $table->string("meta_keywords");
-            $table->string("created_by");
             $table->foreignId("category_id")->constrained("categories")->onDelete("cascade");
             $table->timestamps(); 
         });

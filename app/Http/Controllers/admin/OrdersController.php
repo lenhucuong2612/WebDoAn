@@ -28,7 +28,23 @@ class OrdersController extends Controller
         $getOrder->status=$request->status;
         $getOrder->save();
         Mail::to($getOrder->email)->send(new OrderStatusMail($getOrder));
-        $json['message']="Status successfully updated";
+        $check=true;
+        if($request->status==4 && $getOrder->payment_method=="cash"){
+            $getOrder->delete();
+            $check==true;
+        }else if($request->status==4 && $request->payment_method!="cash"){
+            $check==false;
+        }else 
+        {
+            $check =true;
+        }
+
+        if($check)
+        {
+            $json['message']="Status successfully updated";
+        }else{
+            $json['message']="Status no successfully updated";
+        }
         echo json_encode($json);
     }
 }

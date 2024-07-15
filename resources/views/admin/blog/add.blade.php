@@ -45,7 +45,7 @@
                       </div>
                       <div class="form-group">
                         <label >Description</label>
-                        <textarea class="form-control editor" name="description " name="description" placeholder="Description"></textarea>
+                        <textarea class="form-control editor" name="description" name="description" placeholder="Description"></textarea>
                       </div>
                       <div class="form-group">
                         <label for="">Status</label>

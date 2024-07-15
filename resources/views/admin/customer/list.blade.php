@@ -97,7 +97,7 @@
                                 {{($value->status==0)?'Active':'Inactive'}}
                               </td>
                               <td>
-                                <a href="{{route("admin.admin.remove",$value->id)}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Remove</a>
+                                <a href="{{route("admin.admin.remove",$value->id)}}" onclick="return confirm('Are you want to delete?')"><i style="width: 30px; font-size:20px; color: red" class="far fas fa-trash nav-icon"></i></a>
                               </td>
                             </tr>
                         @endforeach

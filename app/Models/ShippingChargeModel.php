@@ -16,13 +16,11 @@ class ShippingChargeModel extends Model
     static public function getRecord()
     {
         return self::select('shipping_charge.*')
-        ->where('shipping_charge.is_delete','=',0)
         ->orderBy('shipping_charge.id','desc')
         ->paginate(20);
     }
     static public function CheckDiscount($code){
         return self::select('shipping_charge.*')
-        ->where('shipping_charge.is_delete','=',0)
         ->where('shipping_charge.status','=',0)
         ->where('shipping_charge.name','=',$code)
         ->get(20);
@@ -30,7 +28,6 @@ class ShippingChargeModel extends Model
     static public function getRecordActive()
     {
         return self::select('shipping_charge.*')
-        ->where('shipping_charge.is_delete','=',0)
         ->where('shipping_charge.status','=',0)
         ->orderBy('shipping_charge.id','desc')
         ->paginate(20);

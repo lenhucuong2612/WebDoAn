@@ -22,16 +22,13 @@ class BrandController extends Controller
     public function Insert(Request $request){
         $validator=Validator::make($request->all(),[
             'brand_name'=>'required',
-            'slug'=>'required|unique:brand'
         ]);
        if($validator->passes()){
         $category=new BrandModel();
         $category->name=trim($request->brand_name);
-        $category->slug=trim($request->slug);
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
-        $category->created_by=Auth::user()->id;
         $category->status=$request->status;
         $category->save();
         session()->flash("success","Brand successfully created");
@@ -50,16 +47,13 @@ class BrandController extends Controller
     public function Update($id,Request $request){
         $validator=Validator::make($request->all(),[
             'brand_name'=>'required',
-            'slug'=>'required|unique:brand,slug,'.$id
         ]);
        if($validator->passes()){
         $category=BrandModel::getSingle($id);
         $category->name=trim($request->brand_name);
-        $category->slug=trim($request->slug);
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
-        $category->created_by=Auth::user()->id;
         $category->status=$request->status;
         $category->save();
         session()->flash("success","Brand successfully updated");
@@ -72,9 +66,14 @@ class BrandController extends Controller
     }
     public function Remove($id){
         $category=BrandModel::getSingle($id);
-        $category->is_delete=1;
-        $category->save();
-        session()->flash("success","Brand successfully deleted");
-        return redirect()->back();
+        if($category==null)
+        {
+            abort(404);
+        }else{
+            $category->delete();
+            session()->flash("success","Brand successfully deleted");
+            return redirect()->back();
+        }
+        
     }
 }

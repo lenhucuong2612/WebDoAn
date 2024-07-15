@@ -10,9 +10,6 @@
           <div class="col-sm-6">
             <h1>Admin List</h1>
           </div>
-          <div class="col-sm-6" style="text-align: right">
-            <a href="{{route("admin.admin.add")}}" class="btn btn-primary">Add new admin</a>
-          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -53,7 +50,6 @@
                               </td>
                               <td>
                                 <a href="{{route("admin.admin.edit",$value->id)}}" class="btn btn-primary">Edit</a>
-                                <a href="{{route("admin.admin.remove",$value->id)}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Remove</a>
                               </td>
                             </tr>
                         @endforeach

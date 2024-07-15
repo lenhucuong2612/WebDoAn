@@ -9,6 +9,9 @@
             <div class="col-sm-6">
               <h1>Page List</h1>
             </div>
+            <div class="col-sm-6" style="text-align: right">
+              <a href="{{route("admin.page.add")}}" class="btn btn-primary">Add new page</a>
+            </div>
           </div>
         </div><!-- /.container-fluid -->
       </section>
@@ -44,7 +47,8 @@
                                 <td>{{$value->name}}</td>
                                 <td>{{$value->title}}</td>
                                 <td>
-                                  <a href="{{route("admin.page.edit",$value->id)}}" class="btn btn-primary">Edit</a>
+                                  <a href="{{route("admin.page.edit",$value->id)}}" ><i style="width: 30px; font-size:20px" class="far fas fa-pencil-alt nav-icon"></i></a>
+                                  <a href="{{route("admin.page.remove",$value->id)}}" onclick="return confirm('Are you want to delete')"><i style="width: 30px; font-size:20px; color: red" class="far fas fa-trash nav-icon"></i></a>
                                 </td>
                               </tr>
                           @endforeach

@@ -15,21 +15,18 @@ class BlogCategoryModel extends Model
     } 
     static public function getSingleSlug($slug){
         return self::where('slug','=',$slug)
-        ->where('blog_category.is_delete','=',0)
         ->where('blog_category.status','=',0)
         ->first();
     }
     static public function getRecord()
     {
         return self::select('blog_category.*')
-        ->where('blog_category.is_delete','=',0)
         ->orderBy('blog_category.id','desc')
         ->get();
     }
     static public function getRecordActive()
     {
         return self::select('blog_category.*')
-        ->where('blog_category.is_delete','=',0)
         ->where('blog_category.status','=',0)
         ->orderBy('blog_category.id','asc')
         ->paginate(20);
@@ -37,7 +34,6 @@ class BlogCategoryModel extends Model
     public function getCountBlog()
     {
         return $this->hasMany(BlogModel::class,'blog_category_id')
-        ->where('blog.is_delete','=',0)
         ->where('blog.status','=',0)
         ->count();
     }

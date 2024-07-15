@@ -19,6 +19,7 @@
     <div class="page-content">
         <div class="dashboard">
             <div class="container">
+                @include('_message')
                 <div class="row">
                    @include('user.slidebar')
                     <div class="col-md-8 col-lg-9">
@@ -57,6 +58,7 @@
                                             <td>{{date('d-m-Y',strtotime($value->created_at))}}</td>
                                             <td>
                                               <a href="{{route("user.order.detail",$value->id)}}"  class="btn btn-primary">Detail</a>
+                                              <a href="{{route("user.order.delete",$value->id)}}"  class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel')">Cancel</a>
                                             </td>
                                           </tr>
                                       @endforeach

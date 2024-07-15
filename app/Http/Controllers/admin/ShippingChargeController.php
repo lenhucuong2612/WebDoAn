@@ -61,9 +61,13 @@ class ShippingChargeController extends Controller
     }
     public function Remove($id){
         $shipping_charge=ShippingChargeModel::getSingle($id);
-        $shipping_charge->is_delete=1;
-        $shipping_charge->save();
+       if($shipping_charge==null)
+       {
+        abort(404);
+       }else{
+        $shipping_charge->delete();
         session()->flash("success","Shipping Charge successfully deleted");
         return redirect()->back();
+       }
     }
 }

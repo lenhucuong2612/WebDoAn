@@ -135,4 +135,15 @@ class UserController extends Controller
         $save->save();
         return redirect()->back()->with('success','Thank you for your review');
     }
+    public function DeleteDetail($id)
+    {
+        $order=OrderModel::getSingleUser(Auth::user()->id,$id);
+       if($order==null)
+       {
+        abort(404);
+       }else{
+        $order->delete();
+        return redirect()->back()->with('success','Cancel successfully');
+       }
+    }
 }

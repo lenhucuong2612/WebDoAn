@@ -23,17 +23,16 @@ class CategoryController extends Controller
     }
     public function InsertCategory(Request $request){
         $validator=Validator::make($request->all(),[
-            'category_name'=>'required',
-            'slug'=>'required|unique:categories,slug'
+            'category_name'=>'required'
         ]);
        if($validator->passes()){
         $category=new CategoryModel();
-        $category->name=trim($request->category_name);
+        $name=trim($request->category_name);
+        $category->name=$name;
         $category->slug=trim($request->slug);
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
-        $category->created_by=Auth::user()->id;
         $category->button_name=trim($request->button_name);
         $category->is_home=!empty($request->is_home)?1:0;
         if($request->file('image_name')){
@@ -46,6 +45,17 @@ class CategoryController extends Controller
         }
         $category->status=$request->status;
         $category->save();
+        $slug=Str::slug($name,'-');
+        $checkSlug=CategoryModel::checkSlug($slug);
+        if(empty($checkSlug))
+        {
+            $category->slug=$slug;
+            $category->save();
+        }else{
+            $new_slug=$slug.'-'.$category->id;
+            $category->slug=$new_slug;
+            $category->save();
+        }
         session()->flash("success","Category successfully created");
         return redirect(route("admin.categories.list"));
        }else{
@@ -61,13 +71,13 @@ class CategoryController extends Controller
     }
     public function UpdateCategory($id,Request $request){
         $validator=Validator::make($request->all(),[
-            'category_name'=>'required',
-            'slug'=>'required|unique:categories,slug,'.$id
+            'category_name'=>'required'
         ]);
        if($validator->passes()){
         $category=CategoryModel::getSingle($id);
-        $category->name=trim($request->category_name);
-        $category->slug=trim($request->slug);
+        $name=trim($request->category_name);
+        $category->name=$name;
+       
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
@@ -90,9 +100,23 @@ class CategoryController extends Controller
             $file->move(public_path('/upload/category/'),$filename);
             $category->image_name=trim($filename);
         }
-        $category->created_by=Auth::user()->id;
         $category->status=$request->status;
-        $category->save();
+        $category->save(); 
+        $slug=Str::slug($name,'-');
+        $checkSlug=CategoryModel::checkSlug($slug);
+        if(empty($checkSlug)){
+            $category->slug=$slug;
+            $category->save();
+        }else{
+            if(CategoryModel::getSingle($id)->slug==$slug){
+                $category->slug=$slug;
+                $category->save();
+            }else{
+                $new_slug=$slug.'-'.$category->id;
+                $category->slug=$new_slug;
+                $category->save();
+            }
+        }
         session()->flash("success","Category successfully updated");
         return redirect(route("admin.categories.list"));
        }else{
@@ -101,12 +125,17 @@ class CategoryController extends Controller
             ->withInput();
         }
     }
-    public function DeleteCategory($id){
+    public function RemoveCategory($id){
         $category=CategoryModel::getSingle($id);
-        $category->is_delete=1;
-        $category->save();
+        if($category==null)
+        {
+            abort(404);
+        }
+        else{
+            $category->delete();
         session()->flash("success","Category successfully deleted");
         return redirect()->back();
+        }
     }
    
 }

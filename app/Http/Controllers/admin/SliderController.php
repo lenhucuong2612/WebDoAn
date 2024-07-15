@@ -71,9 +71,13 @@ class SliderController extends Controller
     }
     public function Remove($id){
         $slider=SliderModel::getSingle($id);
-        $slider->is_delete=1;
-        $slider->save();
+       if($slider==null)
+       {
+        abort(4040);
+       }else{
+        $slider->delete();
         session()->flash("success","Slider successfully deleted");
         return redirect()->back();
+       }
     }
 }

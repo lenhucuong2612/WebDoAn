@@ -63,12 +63,16 @@
                                 <div class="form-group">
                                     <label for="">Shipping Name : <span style="font-weight: normal">{{$getRecord->getShipping->name}}</span></label>
                                 </div>
+                                @if ($getRecord->payment_method=='paypal')
                                 <div class="form-group">
-                                    <label for="">Shipping Amount($) : <span style="font-weight: normal">{{number_format($getRecord->shipping_amount,2)}}</span></label>
+                                    <label for="">TotalAmount(VND) : <span style="font-weight: normal">{{number_format($getRecord->total_amount*23000,2)}}</span></label>
                                 </div>
+                                @else
+                                    
                                 <div class="form-group">
                                     <label for="">TotalAmount($) : <span style="font-weight: normal">{{number_format($getRecord->total_amount,2)}}</span></label>
                                 </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="">Payment Method : <span style="font-weight: normal">{{$getRecord->payment_method}}</span></label>
                                 </div>

@@ -44,6 +44,7 @@ Route::group(['middleware'=>'user'],function(){
     Route::get("/user/dashboard",[UserController::class,'Dashboard'])->name("user.dashboard");
     Route::get("/user/orders",[UserController::class,'Orders'])->name("user.orders");
     Route::get("/user/orders/{id}",[UserController::class,'OrderDetail'])->name("user.order.detail");
+    Route::get("/user/delete/{id}",[UserController::class,'DeleteDetail'])->name("user.order.delete");
 
     Route::get("/user/edit-profile",[UserController::class,'EditProfile'])->name("user.edit_profile");
     Route::post("/user/edit-profile",[UserController::class,'UpdateProfile'])->name("user.update_profile");
@@ -70,16 +71,17 @@ Route::group(['middleware'=>'admin'],function(){
     Route::get("/admin/category/list",[CategoryController::class,'ListCategories'])->name("admin.categories.list");
     Route::get("/admin/category/add",[CategoryController::class,'AddCategory'])->name("admin.category.add");
     Route::post("/admin/category/add",[CategoryController::class,'InsertCategory'])->name("admin.category.insert");
-    Route::get("/admin/category/edit/{id}",[CategoryController::class,'EditCategory'])->name("admin.category.edit");
-    Route::post("/admin/category/edit/{id}",[CategoryController::class,'UpdateCategory'])->name("admin.category.update");
-    Route::get("/admin/category/remove/{id}",[CategoryController::class,'RemoveCategory'])->name("admin.category.remove");
+        Route::get("/admin/category/edit/{id}",[CategoryController::class,'EditCategory'])->name("admin.category.edit");
+        Route::post("/admin/category/edit/{id}",[CategoryController::class,'UpdateCategory'])->name("admin.category.update");
+        Route::get("/admin/category/remove/{id}",[CategoryController::class,'RemoveCategory'])->name("admin.category.remove");
+
 
     Route::get("/admin/sub_category/list",[SubCategoryController::class,'List'])->name("admin.sub_categories.list");
     Route::get("/admin/sub_category/add",[SubCategoryController::class,'Add'])->name("admin.sub_category.add");
     Route::post("/admin/sub_category/add",[SubCategoryController::class,'Insert'])->name("admin.sub_category.insert");
-    Route::get("/admin/sub_category/edit/{id}",[SubCategoryController::class,'Edit'])->name("admin.sub_category.edit");
-    Route::post("/admin/sub_category/edit/{id}",[SubCategoryController::class,'Update'])->name("admin.sub_category.update");
-    Route::get("/admin/sub_category/remove/{id}",[SubCategoryController::class,'Remove'])->name("admin.sub_category.remove");
+        Route::get("/admin/sub_category/edit/{id}",[SubCategoryController::class,'Edit'])->name("admin.sub_category.edit");
+        Route::post("/admin/sub_category/edit/{id}",[SubCategoryController::class,'Update'])->name("admin.sub_category.update");
+        Route::get("/admin/sub_category/remove/{id}",[SubCategoryController::class,'Remove'])->name("admin.sub_category.remove");
 
     Route::post('/admin/get_sub_category',[SubCategoryController::class,'Get_Sub_Category'])->name('admin.get_sub_category');
 
@@ -92,22 +94,21 @@ Route::group(['middleware'=>'admin'],function(){
     Route::get("/admin/product/remove/{id}",[ProductController::class,'Remove'])->name("admin.product.remove");
     Route::get("/admin/product/delete_image/{id}",[ProductController::class,'DeleteImage'])->name("admin.product.delele.image");
     Route::post("/admin/product/image/sortable",[ProductController::class,'Sortable'])->name("admin.product.image.sortable");
-
+    Route::get("/admin/product/detail/{id}",[ProductController::class,'Detail'])->name("admin.product.detail");
     //brand
     Route::get("/admin/brand/list",[BrandController::class,'List'])->name("admin.brand.list");
     Route::get("/admin/brand/add",[BrandController::class,'Add'])->name("admin.brand.add");
     Route::post("/admin/brand/add",[BrandController::class,'Insert'])->name("admin.brand.insert");
-    Route::get("/admin/brand/edit/{id}",[BrandController::class,'Edit'])->name("admin.brand.edit");
-    Route::post("/admin/brand/edit/{id}",[BrandController::class,'Update'])->name("admin.brand.update");
-    Route::get("/admin/brand/remove/{id}",[BrandController::class,'Remove'])->name("admin.brand.remove");
-
+        Route::get("/admin/brand/edit/{id}",[BrandController::class,'Edit'])->name("admin.brand.edit");
+        Route::post("/admin/brand/edit/{id}",[BrandController::class,'Update'])->name("admin.brand.update");
+        Route::get("/admin/brand/remove/{id}",[BrandController::class,'Remove'])->name("admin.brand.remove");
     //color
     Route::get("/admin/color/list",[ColorController::class,'List'])->name("admin.color.list");
     Route::get("/admin/color/add",[ColorController::class,'Add'])->name("admin.color.add");
     Route::post("/admin/color/add",[ColorController::class,'Insert'])->name("admin.color.insert");
-    Route::get("/admin/color/edit/{id}",[ColorController::class,'Edit'])->name("admin.color.edit");
-    Route::post("/admin/color/edit/{id}",[ColorController::class,'Update'])->name("admin.color.update");
-    Route::get("/admin/color/remove/{id}",[ColorController::class,'Remove'])->name("admin.color.remove");
+        Route::get("/admin/color/edit/{id}",[ColorController::class,'Edit'])->name("admin.color.edit");
+        Route::post("/admin/color/edit/{id}",[ColorController::class,'Update'])->name("admin.color.update");
+        Route::get("/admin/color/remove/{id}",[ColorController::class,'Remove'])->name("admin.color.remove");
 
      //discount code
      Route::get("/admin/discount-code/list",[DiscountCodeController::class,'List'])->name("admin.discount_code.list");
@@ -131,8 +132,11 @@ Route::group(['middleware'=>'admin'],function(){
      Route::get("/admin/customer/list",[AdminController::class,'ListCustomer'])->name("admin.customer.list");
 
      Route::get("/admin/page/list",[PageController::class,'List'])->name("admin.page.list");
+     Route::get("/admin/page/add",[PageController::class,'Add'])->name("admin.page.add");
+     Route::post("/admin/page/insert",[PageController::class,'Insert'])->name("admin.page.insert");
      Route::get("/admin/page/edit/{id}",[PageController::class,'Edit'])->name("admin.page.edit");
      Route::post("/admin/page/edit/{id}",[PageController::class,'Update'])->name("admin.page.update");
+     Route::get("/admin/page/remove/{id}",[PageController::class,'Remove'])->name("admin.page.remove");
 
      Route::get("/admin/system-setting",[PageController::class,'SystemSetting'])->name("admin.system_setting");
      Route::post("/admin/system-setting",[PageController::class,'UpdateSetting']);
@@ -171,7 +175,6 @@ Route::group(['middleware'=>'admin'],function(){
 
 Route::get('/',[HomeController::class,'home'])->name('home');
 Route::post('/recent_arrival_category_product',[HomeController::class,'recent_arrival_category_product']);
-Route::post('/trendy_product_category',[HomeController::class,'trendyCategoryProduct']);
 
 Route::get('/contact',[HomeController::class,'Contact'])->name('contact');
 Route::post('/contact',[HomeController::class,'SubmitContact']);
@@ -183,7 +186,8 @@ Route::get('/returns',[HomeController::class,'Returns'])->name('returns');
 Route::get('/shipping',[HomeController::class,'Shipping'])->name('shipping');
 Route::get('/terms-conditions',[HomeController::class,'TermConditions'])->name('terms-conditions');
 Route::get('/privacy-policy',[HomeController::class,'PrivacyPolicy'])->name('privacy-policy');
-Route::get('blog',[HomeController::class,'Blog'])->name('blog');
+Route::get('blog/blog-category/{blog_category?}',[HomeController::class,'Blog'])->name('blog');
+Route::get('blog/{slug}',[HomeController::class,'BlogDetail'])->name('blog_detail');
 Route::post('/auth_register',[AuthController::class,'AuthRegister'])->name("auth_register");
 Route::post('/auth_login',[AuthController::class,'AuthLogin'])->name('auth_login');
 Route::get("/active/{id}",[AuthController::class,'ActiveEmail'])->name('active_email');
@@ -209,3 +213,5 @@ Route::get('stripe/payment-success',[PaymentController::class,'StripeSuccessPaym
 
 Route::post('get_filter_product_ajax',[ProductFront::class,'GetFilterCategoryAjax'])->name('get_filter_product_ajax');
 Route::get('{slug?}/{sub_slug?}',[ProductFront::class,'getCategory'])->name('get_category');
+
+Route::post('seen_quantity_product_of_size',[HomeController::class,'SeenQuantityProduct'])->name('seen_quantity_product_of_size');

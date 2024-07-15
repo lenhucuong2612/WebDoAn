@@ -67,9 +67,14 @@ class PartnerController extends Controller
     }
     public function Remove($id){
         $partner=PartnerModel::getSingle($id);
-        $partner->is_delete=1;
-        $partner->save();
+        if($partner==null)
+        {
+            abort(404);
+        }
+       else{
+        $partner->delete();
         session()->flash("success","Partner successfully deleted");
         return redirect()->back();
+       }
     }
 }

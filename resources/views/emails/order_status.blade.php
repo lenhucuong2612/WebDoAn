@@ -4,15 +4,15 @@
 <p>Dear {{$order->first_name}} {{$order->last_name}}, </p>
 
 <p>Order Status: <b>
-@if ($order->status=0)
+@if ($order->status==0)
 Pedding
-@elseif($order->status=1)
+@elseif($order->status==1)
 In Progress
-@elseif($order->status=2)
+@elseif($order->status==2)
 Delivered
-@elseif($order->status=3)
+@elseif($order->status==3)
 Completed
-@elseif($order->status=4)
+@elseif($order->status==4)
 Cancelled
 @endif
 </p>

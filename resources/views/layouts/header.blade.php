@@ -16,6 +16,7 @@
                     <div class="header-menu">
                         <ul>
                             <li><a href="#">English</a></li>
+                            <li><a href="#">VietNam</a></li>
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropdown -->
@@ -32,8 +33,11 @@
                             @else
                             <li><a href="#signin-modal" data-toggle="modal"><i class="icon-heart-o"></i>My Wishlist </a></li>
                             @endif
-                            <li><a href="">About Us</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{{route('about')}}">About Us</a></li>
+                            <li><a href="{{route('contact')}}">Contact Us</a></li>
+                            @if (!empty(Auth::check()) && Auth::user()->is_admin==1)
+                            <li><a href="{{route('admin.dashboard')}}">Dash Board</a></li>
+                            @endif
                             @if (!empty(Auth::check()))
                                 <li><a href="{{route('user.dashboard')}}"><i class="icon-user"></i>{{Auth::user()->name}}</a></li>
                                 <li><a href="{{route('logout')}}" ><i class="icon-close"></i>Logout</a></li>

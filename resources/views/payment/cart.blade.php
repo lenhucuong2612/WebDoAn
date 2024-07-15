@@ -57,8 +57,22 @@
                                             </figure>
     
                                             <h3 class="product-title">
-                                                <a href="{{$getCartProduct->slug}}">{{$getCartProduct->title}} @if(!empty($cart->attributes->size_id!=0)) <br><span>Size: {{App\Models\ProductSizeModel::getSingle($cart->attributes->size_id)->name}}</span> @endif</a>
+                                                <a href="{{$getCartProduct->slug}}">
+                                                    {{$getCartProduct->title}} 
+                                                    @if(!empty($cart->attributes->size_id != 0)) 
+                                                        <br>
+                                                        @php
+                                                            $size = App\Models\ProductSizeModel::getSingle($cart->attributes->size_id);
+                                                        @endphp
+                                                        @if ($size)
+                                                            <span>Size: {{ $size->name }}</span>
+                                                        @else
+                                                            <span>Remove and re-add products</span>
+                                                        @endif
+                                                    @endif
+                                                </a>
                                             </h3><!-- End .product-title -->
+                                            
                                         </div><!-- End .product -->
                                     </td>
                                     <td class="price-col">${{number_format($cart->price,2)}}</td>
@@ -67,7 +81,7 @@
                                             <input type="number" class="form-control" value="{{$cart->quantity}}" min="1" max="100" name="cart[{{$key}}][qty]" step="1" data-decimals="0" required>
                                         </div><!-- End .cart-product-quantity -->
                                         <input type="hidden" class="form-control" value="{{$cart->id}}" name="cart[{{$key}}][id]" step="1" >
-                                        
+                                        <input type="hidden" class="form-control" value="{{$cart->quantity}}" name="cart[{{$key}}][qty_old]">
                                     </td>
                                     <td class="total-col">${{number_format($cart->price*$cart->quantity,2)}}</td>
                                     <td class="remove-col"><a href="{{url('cart/delete',$cart->id)}}" class="btn-remove"><i class="icon-close"></i></a></td>
@@ -118,4 +132,5 @@
 
 @endsection
 @section('script')
+
 @endsection

@@ -34,7 +34,6 @@ class SubCategoryController extends Controller
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
-        $category->created_by=Auth::user()->id;
         $category->category_id=$request->category_name;
         $category->status=$request->status;
         $category->save();
@@ -65,7 +64,6 @@ class SubCategoryController extends Controller
         $category->meta_title=trim($request->meta_title);
         $category->meta_description=trim($request->meta_description);
         $category->meta_keywords=trim($request->meta_keywords);
-        $category->created_by=Auth::user()->id;
         $category->category_id=$request->category_name;
         $category->status=$request->status;
         $category->save();
@@ -79,10 +77,13 @@ class SubCategoryController extends Controller
     }
     public function Remove($id){
         $category=SubCategoriesModel::getSingle($id);
-        $category->is_delete=1;
-        $category->save();
+        if($category==null){
+            abort(404);
+        }else{
+            $category->delete();
         session()->flash("success","Sub Category successfully deleted");
         return redirect(route("admin.sub_categories.list"));
+        }
     }
     public function Get_Sub_Category(Request $request){
         $category_id=$request->id;

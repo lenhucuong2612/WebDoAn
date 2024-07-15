@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('slider', function (Blueprint $table) {
+        Schema::table('blog_category', function (Blueprint $table) {
             $table->dropColumn('slug');
         });
     }

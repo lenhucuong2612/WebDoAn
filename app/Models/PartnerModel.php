@@ -16,14 +16,12 @@ class PartnerModel extends Model
     static public function getRecord()
     {
         return self::select('partner.*')
-        ->where('partner.is_delete','=',0)
         ->orderBy('partner.id','desc')
         ->paginate(20);
     }
     static public function getRecordActive()
     {
         return self::select('partner.*')
-        ->where('partner.is_delete','=',0)
         ->where('partner.status','=',0)
         ->orderBy('partner.id','asc')
         ->paginate(20);

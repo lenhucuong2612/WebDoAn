@@ -162,12 +162,19 @@
                               <td>${{number_format($value->total_amount,2)}}</td>
                               <td>{{$value->payment_method}}</td>
                               <td>
-                                <select name="" class="form-control ChangeStatus" id="{{$value->id}}" style="width:150px">
+                                <select name="status" class="form-control ChangeStatus" id="{{$value->id}}" style="width:150px">
+                                  @if ($value->status!=3)
                                   <option  {{($value->status==0) ?'selected':''}} value="0">Pedding</option>
                                   <option {{($value->status==1) ?'selected':''}} value="1">Inprogress</option>
                                   <option {{($value->status==2) ?'selected':''}} value="2">Delivered</option>
                                   <option {{($value->status==3) ?'selected':''}} value="3">Completed</option>
+                                  @endif
+                                  @if ($value->status==3)
+                                  <option {{($value->status==3) ?'selected':''}} value="3">Completed</option>
+                                  @endif
+                                  @if ($value->payment_method=='cash' && $value->status!=3)
                                   <option {{($value->status==4) ?'selected':''}} value="4">Cancelled</option>
+                                  @endif
                                 </select>
                               </td>
                               <td>{{date('d-m-Y',strtotime($value->created_at))}}</td>

@@ -37,7 +37,6 @@
                       <th>#</th>
                       <th>Name</th>
                       <th>Code</th>
-                      <th>Created By</th>
                       <th>Status</th>
                       <th>Created At</th>
                       <th>Action</th>
@@ -50,14 +49,13 @@
                               <td>{{$value->id}}</td>
                               <td>{{$value->name}}</td>
                               <td>{{$value->code}}</td>
-                              <td>{{$value->created_by_name}}</td>
                               <td>
                                 {{($value->status==0)?'Active':'Inactive'}}
                               </td>
                               <td>{{date('d-m-Y',strtotime($value->created_at))}}</td>
                               <td>
-                                <a href="{{route("admin.color.edit",$value->id)}}" class="btn btn-primary">Edit</a>
-                                <a href="{{route("admin.color.remove",$value->id)}}" onclick="return confirm('Are you want to delete?')" class="btn btn-danger">Remove</a>
+                                <a href="{{route("admin.color.edit",$value->id)}}" ><i style="width: 30px; font-size:20px" class="far fas fa-pencil-alt nav-icon"></i></a>
+                                <a href="{{route("admin.color.remove",$value->id)}}" onclick="return confirm('Are you want to delete?')"><i style="width: 30px; font-size:20px; color: red" class="far fas fa-trash nav-icon"></i></a>
                               </td>
                             </tr>
                         @endforeach

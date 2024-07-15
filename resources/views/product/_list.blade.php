@@ -1,5 +1,9 @@
 <div class="products mb-3">
     <div class="row justify-content-center">
+        @if ($getProduct->count()==0)
+            <p>No product</p>
+        @else
+            
         @foreach ($getProduct as $value)
         @php
             $getProductImage=$value->getIamgeSingle($value->id);
@@ -61,12 +65,12 @@
                 </div><!-- End .product -->
             </div>
         @endforeach
+        @endif
         
        
     </div><!-- End .row -->
 </div><!-- End .products -->
-{{--
-    <div class="justify-content-center">
+<div>
     {{$getProduct->links()}}
 </div>
---}}
+

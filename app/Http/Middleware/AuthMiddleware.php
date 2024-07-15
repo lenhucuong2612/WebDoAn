@@ -17,7 +17,7 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(!empty(Auth::check())){
-            if(Auth::user()->is_admin==1){
+            if(Auth::user()->is_admin==1 || Auth::user()->is_admin==2){
                 return $next($request); 
             }else{
                 Auth::logout();

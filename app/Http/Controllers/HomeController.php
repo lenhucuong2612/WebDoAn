@@ -10,6 +10,7 @@ use App\Models\ContactUsModel;
 use App\Models\PageModel;
 use App\Models\PartnerModel;
 use App\Models\ProductModel;
+use App\Models\ProductSizeModel;
 use App\Models\SliderModel;
 use App\Models\SystemSettingModel;
 use Illuminate\Http\Request;
@@ -29,7 +30,29 @@ class HomeController extends Controller
         $data['getCategory']=CategoryModel::getRecordActiveHome();
         $data['getProduct']=ProductModel::getRecentArrival();
         $data['getProductTrendy']=ProductModel::productTrendy();
+        $data['getBlog']=BlogModel::getRecordByHome();
         return view('home',$data);
+    }
+    public function SeenQuantityProduct(Request $request)
+    {
+        
+        $size_id = $request->data[0]['size_id'];
+        if(!empty($size_id)){
+            $getSize=ProductSizeModel::getSingle($size_id);
+            $amount=$getSize->quantity;
+            $response = [
+                'success' => true,
+                'amount'=>$amount
+            ];
+        
+        }else{
+            $response = [
+                'success' => false,
+                'amount'=>0
+            ];
+        }
+       
+        return response()->json($response);
     }
     public function recent_arrival_category_product(Request $request)
     {
@@ -156,15 +179,45 @@ class HomeController extends Controller
         $data['keywords']=$getPage->meta_keywords;
         return view('page.privacy_policy',$data);
     }
-    public function Blog()
+    public function Blog($blog_category='')
     {
-        $getPage=PageModel::getSlug('blog');
-        $data['getPage']=$getPage;
-        $data['meta_title']=$getPage->meta_title;
-        $data['meta_description']=$getPage->meta_description;
-        $data['keywords']=$getPage->meta_keywords;
-        $data['getBlog']=BlogModel::getBlog();
+        if($blog_category!='')
+        {
+            $getBlog=BlogModel::getBlogByCategory($blog_category);
+            $data['getBlog']=$getBlog;
+            $data['getPage']=BlogCategoryModel::getSingleSlug($blog_category);
+
+
+        }else{
+            $getPage=PageModel::getSlug('blog');
+            $data['getPage']=$getPage;
+            $data['meta_title']=$getPage->meta_title;
+            $data['meta_description']=$getPage->meta_description;
+            $data['keywords']=$getPage->meta_keywords;
+            $data['getBlog']=BlogModel::getBlog();
+        }
+        $data['getPopular']=BlogModel::getPopular();
         $data['getBlogCategory']=BlogCategoryModel::getRecordActive();
         return view('blog.list',$data);
+    }
+    public function BlogDetail($slug)
+    {
+        $getBlog=BlogModel::getSlug($slug);
+        if(!empty($getBlog)){
+            $title_view=$getBlog->title_view;
+            $getBlog->title_view=$title_view+1;
+            $getBlog->save();
+            $data['getPage']=$getBlog;
+            $data['meta_title']=$getBlog->meta_title;
+            $data['meta_description']=$getBlog->meta_description;
+            $data['keywords']=$getBlog->meta_keywords;
+            $data['getBlog']=$getBlog;
+            $data['getBlogCategory']= $data['getBlogCategory']=BlogCategoryModel::getRecordActive();
+            $data['getPopular']=BlogModel::getPopular();
+            $data['getRalatedPost']=BlogModel::getRelatedPost($getBlog->blog_category_id,$getBlog->id);
+            return view('blog.detail',$data);
+        }else{
+            abort(404);
+        }
     }
 }

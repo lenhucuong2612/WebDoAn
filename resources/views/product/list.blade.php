@@ -41,32 +41,21 @@
             <div class="row">
                 <div class="col-lg-9">
                     <div class="toolbox">
-                        <div class="toolbox-left">
-                            <div class="toolbox-info">
-                                Showing <span>{{$getProduct->perPage()}} of {{$getProduct->total()}}</span> Products
-                            </div><!-- End .toolbox-info -->
-                        </div><!-- End .toolbox-left -->
-                        <div class="toolbox-right">
-                            <div class="toolbox-sort">
-                                <label for="sortby">Sort by:</label>
-                                <div class="select-custom ">
-                                    <select name="sortby" id="sortby" class="form-control ChangeSortBy">
-                                        <option value="">Select</option>
-                                        <option value="popularity">Most Popular</option>
-                                        <option value="rating">Most Rated</option>
-                                        <option value="date">Date</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        
+                       
                         
                     </div>
                     <div id="getProductAjax">
                         @include('product._list')
                     </div>
+                    {{--
+                        
                     <div style="text-align:center">
-                        <a href="javascript:;" class="btn btn-primary LoadMore" @if(empty($page)) style="display:none;" @endif  data-page="{{$page}}" >Load More</a>
+                        a href="javascript:;" class="btn btn-primary LoadMore" @if(empty($page)) style="display:none;" @endif  data-page="{{$page}}" >Load More</a>
                     </div>
+                        
+                    --}}
+                   
                 </div><!-- End .col-lg-9 -->
                 <aside class="col-lg-3 order-lg-first">
                     <form method="post" id="FilterForm" action="" >
@@ -114,61 +103,63 @@
                         </div><!-- End .widget -->
                         @endif
 
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
-                                    Size
-                                </a>
-                            </h3><!-- End .widget-title -->
+                       @if (!empty($check))
+                       <div class="widget widget-collapsible">
+                        <h3 class="widget-title">
+                            <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
+                                Size
+                            </a>
+                        </h3><!-- End .widget-title -->
 
-                            <div class="collapse show" id="widget-2">
-                                <div class="widget-body">
-                                    <div class="filter-items">
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="XS">
-                                                <label class="custom-control-label" for="XS">XS</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
+                        <div class="collapse show" id="widget-2">
+                            <div class="widget-body">
+                                <div class="filter-items">
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="XS">
+                                            <label class="custom-control-label" for="XS">XS</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
 
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="S">
-                                                <label class="custom-control-label" for="S">S</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="S">
+                                            <label class="custom-control-label" for="S">S</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
 
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="M">
-                                                <label class="custom-control-label" for="M">M</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="M">
+                                            <label class="custom-control-label" for="M">M</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
 
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="L">
-                                                <label class="custom-control-label" for="L">L</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="L">
+                                            <label class="custom-control-label" for="L">L</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
 
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="XL">
-                                                <label class="custom-control-label" for="XL">XL</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="XL">
+                                            <label class="custom-control-label" for="XL">XL</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
 
-                                        <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input ChangeSize" id="XXL">
-                                                <label class="custom-control-label" for="XXL">XXL</label>
-                                            </div><!-- End .custom-checkbox -->
-                                        </div><!-- End .filter-item -->
-                                    </div><!-- End .filter-items -->
-                                </div><!-- End .widget-body -->
-                            </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
+                                    <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input ChangeSize" id="XXL">
+                                            <label class="custom-control-label" for="XXL">XXL</label>
+                                        </div><!-- End .custom-checkbox -->
+                                    </div><!-- End .filter-item -->
+                                </div><!-- End .filter-items -->
+                            </div><!-- End .widget-body -->
+                        </div><!-- End .collapse -->
+                    </div><!-- End .widget -->
+                       @endif
 
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">
@@ -211,7 +202,6 @@
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
                         </div><!-- End .widget -->
-
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">
                                 <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
@@ -232,6 +222,30 @@
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
                         </div><!-- End .widget -->
+                        @if ($getDiscountCode->isNotEmpty())  
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-6" role="button" aria-expanded="true" aria-controls="widget-6">
+                                    Discount Code
+                                </a>
+                            </h3><!-- End .widget-title -->
+
+                            <div class="collapse show" id="widget-6">
+                                <div class="widget-body">
+                                    <div class="filter-items">
+                                        @foreach ($getDiscountCode as $f_code)
+                                        <div class="filter-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <label>Code: {{$f_code->name}} - Percent: {{$f_code->percent_amount}} @if ($f_code->type=="Amount")$ @else % @endif</label>
+                                            </div><!-- End .custom-checkbox -->
+                                        </div><!-- End .filter-item -->
+                                        @endforeach
+                                       
+                                    </div><!-- End .filter-items -->
+                                </div><!-- End .widget-body -->
+                            </div><!-- End .collapse -->
+                        </div><!-- End .widget -->
+                        @endif
                     </div><!-- End .sidebar sidebar-shop -->
                 </aside><!-- End .col-lg-3 -->
             </div><!-- End .row -->
@@ -366,13 +380,13 @@
     if ( typeof noUiSlider === 'object' ) {
 		var priceSlider  = document.getElementById('price-slider');
 		noUiSlider.create(priceSlider, {
-			start: [ 0, 1000 ],
+			start: [ 0, 8000 ],
 			connect: true,
 			step: 1,
-			margin: 200,
+			margin: 100,
 			range: {
 				'min': 0,
-				'max': 1000
+				'max': 8000
 			},
 			tooltips: true,
 			format: wNumb({

@@ -21,7 +21,7 @@
     <div class="page-content">
         <div class="checkout">
             <div class="container">
-               
+               @include('_message')
                 <form action="" id="SubmitForm" method="post">
                     @csrf
                     <div class="row">
@@ -175,8 +175,8 @@
                                         <label class="custom-control-label"  for="Cashondelivery">Cash on delivery</label>
                                     </div>
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="PayPal" value="paypal" style="margin-top:10px" required name="payment_method" class="custom-control-input">
-                                        <label class="custom-control-label"  for="PayPal">PayPal</label>
+                                        <input type="radio" id="Vnpay" value="vnpay" style="margin-top:10px" required name="payment_method" class="custom-control-input">
+                                        <label class="custom-control-label"  for="Vnpay">VN Pay</label>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input type="radio" id="CreditCard" value="stripe" style="margin-top:10px" required name="payment_method" class="custom-control-input">
@@ -224,6 +224,7 @@
                 if(data.status==false)
                 {
                     alert(data.message);
+                    window.location.href = "{{ url('cart') }}";
                 }else{
                     window.location.href=data.redirect;
                 }
@@ -269,4 +270,5 @@
         })
     })
 </script>
+
 @endsection

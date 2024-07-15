@@ -21,7 +21,7 @@ class AuthController extends Controller
     }
     public function auth_login_admin(Request $request){
         $remember=!empty($request->remember)?true:false;
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'is_admin'=>1,'status'=>0,'is_delete'=>0],$remember)){
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 0], $remember) && Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2){
             return redirect(route("admin.dashboard"));
         }else{
             return redirect()->back()->with("error","Please enter currect email and password");
@@ -62,8 +62,12 @@ class AuthController extends Controller
     }
     public function AuthLogin(Request $request){
         $remember=!empty($request->is_remember)?true:false;
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>0,'is_delete'=>0],$remember)){
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>0],$remember)){
             if(!empty(Auth::user()->email_verified_at)){
+                if(Auth::user()->is_admin==1)
+                {
+                    $json['check']=true;
+                }
                 $json['status']=true;
                 $json['message']='success';
             }else{

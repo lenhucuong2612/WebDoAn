@@ -21,7 +21,6 @@ class OrderModel extends Model
         return self::select('id')
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->count();
     }
     static public function getTotalTodayOrderUser($user_id)
@@ -29,7 +28,6 @@ class OrderModel extends Model
         return self::select('id')
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','=',date('Y-m-d'))
         ->count();
     }
@@ -38,7 +36,6 @@ class OrderModel extends Model
         return self::select('id')
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->sum('total_amount');
     }
     static public function getTotalTodayAmountUser($user_id)
@@ -46,7 +43,6 @@ class OrderModel extends Model
         return self::select('id')
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','=',date('Y-m-d'))
         ->count('total_amount');
     }
@@ -57,7 +53,6 @@ class OrderModel extends Model
         ->where('status','=',$status)
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->count('total_amount');
     }
 
@@ -66,14 +61,12 @@ class OrderModel extends Model
     {
         return self::select('id')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->count();
     }
     static public function getTotalTodayOrder()
     {
         return self::select('id')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','=',date('Y-m-d'))
         ->count();
     }
@@ -81,14 +74,12 @@ class OrderModel extends Model
     {
         return self::select('id')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->sum('total_amount');
     }
     static public function getTotalTodayAmount()
     {
         return self::select('id')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','=',date('Y-m-d'))
         ->count('total_amount');
     }
@@ -96,8 +87,8 @@ class OrderModel extends Model
     {
         return OrderModel::select('orders.*')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->orderBy('id','desc')
+        ->where('status','=',3)
         ->limit(10)
         ->get();
     }
@@ -105,7 +96,6 @@ class OrderModel extends Model
     {
         return OrderModel::select('orders.*')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','>=',$start_date)
         ->whereDate('created_at','<=',$end_date)
         ->count();
@@ -114,9 +104,9 @@ class OrderModel extends Model
     {
         return OrderModel::select('orders.*')
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->whereDate('created_at','>=',$start_date)
         ->whereDate('created_at','<=',$end_date)
+        ->where('orders.status','=',3)
         ->sum('total_amount');
     }
     static public function getRecordUser($user_id)
@@ -124,7 +114,6 @@ class OrderModel extends Model
         $return= self::select('orders.*')
         ->where('user_id','=',$user_id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->orderBy('id','desc')
         ->paginate(30);
         return $return;
@@ -135,7 +124,6 @@ class OrderModel extends Model
         ->where('user_id','=',$user_id)
         ->where('id','=',$id)
         ->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->first();
         return $return;
     }
@@ -179,7 +167,6 @@ class OrderModel extends Model
             $return=$return->where('created_at','<=',Request::get('to_data'));
         }
         $return=$return->where('is_payment','=',1)
-        ->where('is_delete','=',0)
         ->orderBy('id','desc')
         ->paginate(30);
         return $return;
@@ -190,5 +177,21 @@ class OrderModel extends Model
     }
     public function getItem(){
         return $this->hasMany(OrderItemModel::class,'order_id');
+    }
+    public static function deleteVNpay()
+    {
+        return self::where('is_payment','=',0)
+        ->where('payment_method','=','vnpay')
+        ->where('transaction_id','=','');
+    }
+    public static function deleteStripe()
+    {
+        return self::where('is_payment','=',0)
+        ->where('payment_method','=','stripe')
+        ->where('transaction_id','=','');
+    }
+    public static function findProductByStripe($id)
+    {
+        return self::where('stripe_session_id','=',$id)->first();
     }
 }

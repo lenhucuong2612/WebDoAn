@@ -20,4 +20,18 @@ class ProductSizeModel extends Model
     {
         return self::where('id','=',$id)->first();
     }
+    public static function getSize($product_id)
+    {
+        return self::where('product_id', $product_id)->get(); // Lấy ra một collection của các bản ghi dựa trên size_id
+    }
+    public static function getQuantity($id)
+    {
+        return self::select('quantity')->where('id',$id)->first();
+    }
+    public function productColors()
+    {
+        return $this->hasMany(ProductColorModel::class, 'product_id')->count();
+    }
+
+    
 }

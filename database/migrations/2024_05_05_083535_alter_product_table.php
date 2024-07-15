@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('product', function (Blueprint $table) {
-            $table->integer('created_by');
-        });
+        /**
+        *Schema::table('product', function (Blueprint $table) {
+            *$table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+        *});
+        */
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('product', function (Blueprint $table) {
-            $table->dropColumn('created_by');
-        });
+        /** 
+        *Schema::table('product', function (Blueprint $table) {
+           * $table->dropColumn('created_by');
+        *});
+        */
     }
 };

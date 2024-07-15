@@ -36,11 +36,9 @@
                     <tr>
                       <th>#</th>
                       <th>Name</th>
-                      <th>Slug</th>
                       <th>Meta Title</th>
                       <th>Meta Description</th>
                       <th>Meta Keywords</th>
-                      <th>Created By</th>
                       <th>Status</th>
                       <th>Created At</th>
                       <th>Action</th>
@@ -52,18 +50,16 @@
                             <tr  class="active">
                               <td>{{$value->id}}</td>
                               <td>{{$value->name}}</td>
-                              <td>{{$value->slug}}</td>
                               <td>{{$value->meta_title}}</td>
                               <td>{{$value->meta_description}}</td>
                               <td>{{$value->meta_keywords}}</td>
-                              <td>{{$value->created_by_name}}</td>
                               <td>
                                 {{($value->status==0)?'Active':'Inactive'}}
                               </td>
                               <td>{{date('d-m-Y',strtotime($value->created_at))}}</td>
                               <td>
-                                <a href="{{route("admin.brand.edit",$value->id)}}" class="btn btn-primary">Edit</a>
-                                <a href="{{route("admin.brand.remove",$value->id)}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger">Remove</a>
+                                <a href="{{route("admin.brand.edit",$value->id)}}" ><i style="width: 30px; font-size:20px" class="far fas fa-pencil-alt nav-icon"></i></a>
+                                <a href="{{route("admin.brand.remove",$value->id)}}" onclick="return confirm('Are you want to delete?')" ><i style="width: 30px; font-size:20px; color: red" class="far fas fa-trash nav-icon"></i></a>
                               </td>
                             </tr>
                         @endforeach

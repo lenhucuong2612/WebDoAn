@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/plugins/owl-carousel/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/plugins/magnific-popup/magnific-popup.css')}}">
+    
     @yield('style')
     <style type="text/css">
     .btn-wishlist-add::before{
@@ -193,7 +194,13 @@
             dataType: 'json',
             success: function(data){
                 if(data.status==true){
-                    location.reload();
+                    if(data.check==true)
+                {
+                    window.location.href = '/admin/dashboard';
+                }
+                    else{
+                        location.reload();
+                    }
                 }else{
                     alert(data.message)
                 }

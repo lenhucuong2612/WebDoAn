@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('image_name')->nullable();
             $table->string('button_link')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0:active, 1:inactive');
-            $table->tinyInteger('is_delete')->default(0)->comment('0:not, 1:deleted');
             $table->timestamps();
         });
     }

@@ -10,9 +10,7 @@ class ColorModel extends Model
     use HasFactory;
     protected $table="color";
     static public function getRecord(){
-        return self::select('color.*','users.name as created_by_name')
-        ->join('users','users.id','=','color.created_by')
-        ->where('color.is_delete','=',0)
+        return self::select('color.*')
         ->orderBy('color.id','desc')
         ->get();
     }
@@ -21,10 +19,20 @@ class ColorModel extends Model
     }
     static public function getRecordActive(){
         return self::select('color.*')
-        ->join('users','users.id','=','color.created_by')
-        ->where('color.is_delete','=',0)
         ->where('color.status','=',0)
         ->orderBy('color.name','asc')
+        ->get();
+    }
+    
+    static public function getColorByCategories($slug)
+    {
+        return self::select('color.*')
+        ->join('product_color','product_color.color_id','=','color.id')
+        ->join('product','product.id','=','product_color.product_id')
+        ->join('sub_categories','sub_categories.id','product.sub_category_id')
+        ->join('categories','categories.id','=','sub_categories.category_id')
+        ->where('categories.slug','=',$slug)
+        ->distinct()
         ->get();
     }
 }

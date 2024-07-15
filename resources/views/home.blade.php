@@ -116,64 +116,67 @@
                                         }
                                     }
                                 }'>
+                                @if ($getProductTrendy->isNotEmpty())
                                 @foreach ($getProductTrendy as $value)
-                                @php
-                                $getProductImage=$value->getIamgeSingle($value->id);
-                                $getFullProductImage=$value->getImageFull($value->id);
-                            @endphp
-                                <div class="product product-7 text-center">
-                                    <figure class="product-media">
-                                        @if (date_diff(date_create(date('d-m-Y')), date_create(date('d-m-Y', strtotime($value->created_at))))->days <= 7)
-                                        <span class="product-label label-new">NEW</span>
-                                        @elseif(!empty($value->old_price))
-                                           @if ($value->old_price > $value->price)
-                                                <span class="product-label label-sale">{{($value->old_price-$value->price)/$value->old_price*100}}% OFF</span>
-                                           @endif
-                                        @endif
-                                        <a href="{{url($value->slug)}}">
-                                            @if (!empty($getProductImage) && !empty($getProductImage->getLogo()))
-                                                    <img  src="{{$getProductImage->getLogo()}}" alt="Product image" class="product-image">
-                                            @endif
-                                        </a>
-                                        <div class="product-action-vertical">
-                                            @if(!empty(Auth::check()))
-                                                    <a href="javascript:;" data-toggle="modal" class="add_to_wishlist add_to_wishlist{{$value->id}} btn-product-icon btn-wishlist btn-expandable {{!empty($value->checkWishlist($value->id))?'btn-wishlist-add':''}}" id="{{$value->id}}" title="Wishlist"><span>Add to Wishlist</span></a>
-                                                @else
-                                                <a href="#signin-modal" data-toggle="modal" class="btn-product-icon btn-wishlist btn-expandable" title="Wishlist"><span>Add to Wishlist</span></a>
+                                        @php
+                                        $getProductImage=$value->getIamgeSingle($value->id);
+                                        $getFullProductImage=$value->getImageFull($value->id);
+                                    @endphp
+                                        <div class="product product-7 text-center">
+                                            <figure class="product-media">
+                                                @if (date_diff(date_create(date('d-m-Y')), date_create(date('d-m-Y', strtotime($value->created_at))))->days <= 7)
+                                                <span class="product-label label-new">NEW</span>
+                                                @elseif(!empty($value->old_price))
+                                                @if ($value->old_price > $value->price)
+                                                        <span class="product-label label-sale">{{($value->old_price-$value->price)/$value->old_price*100}}% OFF</span>
                                                 @endif
-                                        </div><!-- End .product-action-vertical -->
-                
-                                        <div class="product-action">
-                                            <a href="{{url($value->slug)}}" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        </div><!-- End .product-action -->
-                                    </figure><!-- End .product-media -->
-                
-                                    <div class="product-body">
-                                        <div class="product-cat">
-                                            <a href="{{url($value->category_slug.'/'.$value->sub_category_slug)}}">{{$value->sub_category_name}}</a>
-                                        </div><!-- End .product-cat -->
-                                        <h3 class="product-title"><a href="{{url($value->slug)}}">{{$value->title}}</a></h3><!-- End .product-title -->
-                                        <div class="product-price">
-                                           ${{number_format($value->price,2)}}
-                                        </div><!-- End .product-price -->
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: {{$value->getReviewRaiting($value->id)}}%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                            <span class="ratings-text">( {{$value->getTotalReview()}} Reviews )</span>
-                                        </div><!-- End .rating-container -->
-                
-                                        <div class="product-nav product-nav-thumbs">
-                                            @foreach($getFullProductImage as $value)
-                                                <a href="#" class="active">
-                                                    <img src="{{$value->getLogo()}}" alt="product desc">
+                                                @endif
+                                                <a href="{{url($value->slug)}}">
+                                                    @if (!empty($getProductImage) && !empty($getProductImage->getLogo()))
+                                                            <img  src="{{$getProductImage->getLogo()}}" alt="Product image" class="product-image">
+                                                    @endif
                                                 </a>
+                                                <div class="product-action-vertical">
+                                                    @if(!empty(Auth::check()))
+                                                            <a href="javascript:;" data-toggle="modal" class="add_to_wishlist add_to_wishlist{{$value->id}} btn-product-icon btn-wishlist btn-expandable {{!empty($value->checkWishlist($value->id))?'btn-wishlist-add':''}}" id="{{$value->id}}" title="Wishlist"><span>Add to Wishlist</span></a>
+                                                        @else
+                                                        <a href="#signin-modal" data-toggle="modal" class="btn-product-icon btn-wishlist btn-expandable" title="Wishlist"><span>Add to Wishlist</span></a>
+                                                        @endif
+                                                </div><!-- End .product-action-vertical -->
+                        
+                                                <div class="product-action">
+                                                    <a href="{{url($value->slug)}}" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                </div><!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+                        
+                                            <div class="product-body">
+                                                <div class="product-cat">
+                                                    <a href="{{url($value->category_slug.'/'.$value->sub_category_slug)}}">{{$value->sub_category_name}}</a>
+                                                </div><!-- End .product-cat -->
+                                                <h3 class="product-title"><a href="{{url($value->slug)}}">{{$value->title}}</a></h3><!-- End .product-title -->
+                                                <div class="product-price">
+                                                ${{number_format($value->price,2)}}
+                                                </div><!-- End .product-price -->
+                                                <div class="ratings-container">
+                                                    <div class="ratings">
+                                                        <div class="ratings-val" style="width: {{$value->getReviewRaiting($value->id)}}%;"></div><!-- End .ratings-val -->
+                                                    </div><!-- End .ratings -->
+                                                    <span class="ratings-text">( {{$value->getTotalReview()}} Reviews )</span>
+                                                </div><!-- End .rating-container -->
+                        
+                                                <div class="product-nav product-nav-thumbs">
+                                                    @foreach($getFullProductImage as $value)
+                                                        <a href="#" class="active">
+                                                            <img src="{{$value->getLogo()}}" alt="product desc">
+                                                        </a>
                                             @endforeach
                                             
                                         </div><!-- End .product-nav -->
                                     </div><!-- End .product-body -->
                                 </div>
                                 @endforeach
+                                    
+                                @endif
                             </div><!-- End .owl-carousel -->
                         </div>
                 </div><!-- End .tab-content -->
@@ -229,14 +232,14 @@
                             @php
                                 $is_home=1;
                             @endphp
-                            @include("product._list")
+                            @include("product._listCate")
                         </div><!-- End .products -->
                         <div class="more-container text-center">
                             <a href="{{url('/search')}}" class="btn btn-outline-darker btn-more"><span>Load more products</span><i class="icon-long-arrow-down"></i></a>
                         </div><!-- End .more-container -->
                     </div><!-- .End .tab-pane -->
                    @foreach ($getCategory as $category)
-                   <div class="tab-pane p-0 fade getCategoryProduct{{$category->id}}" id="top-{{$category->slug}}-tab" role="tabpanel" aria-labelledby="top-{{$category->slug}}-link">
+                   <div class="tab-pane p-0 fade getCategoryProduct{{$category->id}}" id="top-{{$category->slug}}-tab" role="tabpanel" aria-labelledby="#top-{{$category->slug}}-link">
                     
                   </div><!-- .End .tab-pane -->
                    @endforeach
@@ -308,79 +311,35 @@
                                 }
                             }
                         }'>
-                        <article class="entry entry-display">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="assets/images/blog/home/post-1.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
+                        @foreach ($getBlog as $item)
+                            <article class="entry entry-display">
+                                <figure class="entry-media">
+                                    <a href="{{url('/blog/'.$item->slug)}}">
+                                        <img src="{{$item->getImage()}}" alt="image desc">
+                                    </a>
+                                </figure><!-- End .entry-media -->
 
-                            <div class="entry-body pb-4 text-center">
-                                <div class="entry-meta">
-                                    <a href="#">Nov 22, 2018</a>, 0 Comments
-                                </div><!-- End .entry-meta -->
+                                <div class="entry-body pb-4 text-center">
+                                    <div class="entry-meta">
+                                        <a href="{{url('/blog/'.$item->slug)}}">{{date('M d,Y',strtotime($item->created_at))}}</a>
+                                    </div><!-- End .entry-meta -->
 
-                                <h3 class="entry-title">
-                                    <a href="single.html">Sed adipiscing ornare.</a>
-                                </h3><!-- End .entry-title -->
+                                    <h3 class="entry-title">
+                                        <a href="{{url('/blog/'.$item->slug)}}">{{$item->title}}</a>
+                                    </h3><!-- End .entry-title -->
 
-                                <div class="entry-content">
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.<br>Pelletesque aliquet nibh necurna. </p>
-                                    <a href="single.html" class="read-more">Read More</a>
-                                </div><!-- End .entry-content -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-
-                        <article class="entry entry-display">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="assets/images/blog/home/post-2.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
-
-                            <div class="entry-body pb-4 text-center">
-                                <div class="entry-meta">
-                                    <a href="#">Dec 12, 2018</a>, 0 Comments
-                                </div><!-- End .entry-meta -->
-
-                                <h3 class="entry-title">
-                                    <a href="single.html">Fusce lacinia arcuet nulla.</a>
-                                </h3><!-- End .entry-title -->
-
-                                <div class="entry-content">
-                                    <p>Sed pretium, ligula sollicitudin laoreet<br>viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis justo. </p>
-                                    <a href="single.html" class="read-more">Read More</a>
-                                </div><!-- End .entry-content -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
-
-                        <article class="entry entry-display">
-                            <figure class="entry-media">
-                                <a href="single.html">
-                                    <img src="assets/images/blog/home/post-3.jpg" alt="image desc">
-                                </a>
-                            </figure><!-- End .entry-media -->
-
-                            <div class="entry-body pb-4 text-center">
-                                <div class="entry-meta">
-                                    <a href="#">Dec 19, 2018</a>, 2 Comments
-                                </div><!-- End .entry-meta -->
-
-                                <h3 class="entry-title">
-                                    <a href="single.html">Quisque volutpat mattis eros.</a>
-                                </h3><!-- End .entry-title -->
-
-                                <div class="entry-content">
-                                    <p>Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. </p>
-                                    <a href="single.html" class="read-more">Read More</a>
-                                </div><!-- End .entry-content -->
-                            </div><!-- End .entry-body -->
-                        </article><!-- End .entry -->
+                                    <div class="entry-content">
+                                        <p>{!! $item->description !!}</p>
+                                        <a href="{{url('/blog/blog-category/'.$item->getCategory->slug)}}" class="read-more">Read More</a>
+                                    </div><!-- End .entry-content -->
+                                </div><!-- End .entry-body -->
+                            </article><!-- End .entry -->
+                        @endforeach
                     </div><!-- End .owl-carousel -->
                 </div><!-- container -->
 
                 <div class="more-container text-center mb-0 mt-3">
-                    <a href="blog.html" class="btn btn-outline-darker btn-more"><span>View more articles</span><i class="icon-long-arrow-right"></i></a>
+                    <a href="{{url('/blog/blog-category')}}" class="btn btn-outline-darker btn-more"><span>View more articles</span><i class="icon-long-arrow-right"></i></a>
                 </div><!-- End .more-container -->
             </div>
             <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url(assets/images/backgrounds/cta/bg-6.jpg);">

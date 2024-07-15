@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('status')->default(0)->comment('0:active, 1:inactive');
-            $table->tinyInteger('is_delete')->default(0)->comment('0:not, 1:deleted');
             $table->timestamps(); 
         });
     }
